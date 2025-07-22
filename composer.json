@@ -27,5 +27,19 @@
         "Windmill\\Queue\\WindmillQueueServiceProvider"
       ]
     }
-  }
+  },
+  "keywords": [
+    "laravel",
+    "queue",
+    "windmill",
+    "driver",
+    "http",
+    "mysql"
+  ],
+  "support": {
+    "email": "itdev.septian@gmail.com",
+    "source": "https://github.com/babaecip/laravel-windmill-queue"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
