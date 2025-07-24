@@ -24,16 +24,21 @@ class WindmillQueue extends Queue implements QueueContract
     public function push($job, $data = '', $queue = null)
     {   
         $prefixAndQueue = $this->config['prefix'].':'.($queue ?? $this->config['queue']);
+        $pop_url="";
         $jobId = DB::connection($this->config['mysql_driver'])->table('queue_pending')->insertGetId([
             'source' => $this->config['prefix'],
             'queue' => $this->config['queue'],
             'payload' => $this->createPayload($job, $queue, $data),
             'attempt' => 0,
-            'pop_url' => $this->config['pop_url'],
+            'pop_url' => $pop_url,
             'created_at' => date('Y-m-d H:i:s'),
             'reserved_at' => date('Y-m-d H:i:s')
         ]);
-        $result = $this->postHttp('push',$this->config['push_url'], $this->config['prefix'], $this->config['queue'], $this->createPayload($job, $queue, $data), $this->config['pop_url'], $jobId);
+        $pop_url = $this->config['pop_url'].'?queue='.($queue ?? $this->config['queue']).'&prefix='.$this->config['prefix'].'&job_id='.$jobId;
+        DB::connection($this->config['mysql_driver'])->table('queue_pending')->update([
+            'pop_url' => $pop_url
+        ]);
+        $result = $this->postHttp('push',$this->config['push_url'], $this->config['prefix'], $this->config['queue'], $this->createPayload($job, $queue, $data), $pop_url, $jobId);
     }
 
     public function pop($queue = null)
