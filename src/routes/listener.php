@@ -75,6 +75,8 @@ Route::get('/__queue/execute', function(Request $request){
                 'payload' => $jobRow->payload,
                 'attempt' => $jobRow->attempt + 1,
                 'message' => 'Queue processed successfully.',
+                'pop_url' => $jobRow->pop_url,
+                'pending_job_id' => $jobRow->id,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
             $db->commit();
