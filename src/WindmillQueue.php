@@ -35,7 +35,7 @@ class WindmillQueue extends Queue implements QueueContract
             'reserved_at' => date('Y-m-d H:i:s')
         ]);
         $pop_url = $this->config['pop_url'].'?queue='.($queue ?? $this->config['queue']).'&prefix='.$this->config['prefix'].'&job_id='.$jobId;
-        DB::connection($this->config['mysql_driver'])->table('queue_pending')->update([
+        DB::connection($this->config['mysql_driver'])->table('queue_pending')->where('id', $jobId)->update([
             'pop_url' => $pop_url
         ]);
         $result = $this->postHttp('push',$this->config['push_url'], $this->config['prefix'], $this->config['queue'], $this->createPayload($job, $queue, $data), $pop_url, $jobId);
