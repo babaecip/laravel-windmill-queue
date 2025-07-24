@@ -48,7 +48,7 @@ Route::get('/__queue/execute', function(Request $request){
                     'message'           => 'No queue found.',
                     'queue_pending_id'  => null,
                     'queue_complete_id' => null
-                ]
+                ], 204
             )
             ->header('Content-Type', 'application/json');
     } else {
