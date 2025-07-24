@@ -7,10 +7,14 @@ class WindmillConnector implements ConnectorInterface
 {
     public function connect(array $config)
     {
-        $queue = $config['queue'] ?? 'default';
-        $connection = $config['connection'] ?? 'default';
-        $prefix = 'windmill:' . gethostname(); // bisa juga IP
-
-        return new WindmillQueue($prefix, $queue, $connection);
+        $config = [
+            'queue' => $config['queue'] ?? 'default',
+            'prefix' => $config['prefix'] ?? (gethostbyname(gethostname()) . '-' . gethostname()),
+            'token' => $config['token'] ?? "",
+            'push_url' => $config['push_url'] ?? "",
+            'pop_url' => $config['pop_url'] ?? "",
+            'mysql_driver' => $config['mysql_driver'] ?? ""
+        ];
+        return new WindmillQueue($config);
     }
 }
