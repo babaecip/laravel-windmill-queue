@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/__queue/status', function () {
     return response()
@@ -108,4 +109,12 @@ Route::get('/__queue/execute', function(Request $request){
     }
 
 
+});
+
+Route::get('/__schedule/run', function () {
+    Artisan::call('schedule:run');
+    return response()->json([
+        'status' => 'ok',
+        'output' => Artisan::output(),
+    ]);
 });
