@@ -1,5 +1,5 @@
 {
-  "name": "loyalid/laravel-windmill-queue",
+  "name": "babaecip/laravel-windmill-queue",
   "description": "Custom Laravel queue driver using Windmill protocol over HTTP. Stores jobs in MySQL. Consumer is triggered via HTTP listener (Windmill).",
   "type": "library",
   "license": "MIT",
