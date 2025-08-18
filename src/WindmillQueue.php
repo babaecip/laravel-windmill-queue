@@ -48,11 +48,11 @@ class WindmillQueue extends Queue implements QueueContract
     }
 
     public function pushRaw($payload, $queue = null, array $options = []){
-
+        $this->push($payload, $payload, $queue);
     }
 
     public function later($delay, $job, $data = '', $queue = null){
-
+        $this->push($job, $data, $queue);
     }
 
     public function postHttp($purpose, $url, $prefix, $queue, $payload, $pop_url, $job_id)
