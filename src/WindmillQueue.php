@@ -21,8 +21,11 @@ class WindmillQueue extends Queue implements QueueContract
         return 0;
     }
 
-    public function push($job, $data = '', $queue = null, $delay = 0)
+    public function push($job, $data = '', $queue = null, $delay = 2)
     {   
+        if($delay < 2){
+            $delay = 2;
+        }
         $prefixAndQueue = $this->config['prefix'].':'.($queue ?? $this->config['queue']);
         $queue = ($queue ?? $this->config['queue']);
         $pop_url="";
